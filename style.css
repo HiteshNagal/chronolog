@@ -62,13 +62,23 @@ button{
     background-color: var(--btn-prim-bg-color);
     box-shadow: 0 0 2px 1px black inset;
 }
+
 button:hover:not(:disabled){
     background-color: var(--btn-sec-bg-color);
 }
+
 button:active:not(:disabled){
     transform: scale(0.95);
 }
+
 input:disabled{
     color: inherit;
     background-color: white;
+}
+
+table{
+    border-collapse: collapse;
+}
+th,td{
+    border: 1px solid;
 }
