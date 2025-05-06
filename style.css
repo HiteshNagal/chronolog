@@ -9,12 +9,11 @@
     margin: unset;
 }
 
-
 /* GENERAL STYLES */
 html{
     font-family: tahoma;
     font-size: 10px;
-    line-height: 2;
+    line-height: 1.5;
 }
 
 body{
@@ -26,13 +25,14 @@ header, main, footer, fieldset{
     padding: 1rem;
 }
 
-fieldset, legend, input, button, select{
+legend, input, button, select{
     font-size: inherit;
     border: none;
     border-radius: 0.25rem;
 }
 input, button, select{
     padding: 0.25rem;
+    margin: 2px;
 }
 /* TRACKER CONTROLS STYLES */
 
@@ -41,31 +41,30 @@ input, button, select{
     flex-flow: column nowrap;
 }
 
-fieldset:first-of-type{
-    border-bottom: 1px solid;
+fieldset{
+    min-width: 350px;
+    max-width: fit-content;
+    margin: 0px auto;
 }
 
-fieldset, fieldset > div:first-of-type{
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    gap: 0.5rem;
+
+input, select{
+    border: 1px solid;
 }
 
 button{
     padding: 0.5rem;
-    height: 3rem;
-    min-width: 5rem;
+    font-weight: bold;
     background-color: gray;
-    box-shadow: 0 0 2px 1px black inset;
 }
 
 button:hover:not(:disabled){
+    color: white;
     background-color: black;
 }
 
 button:active:not(:disabled){
-    filter: invert(1);
+    box-shadow: 0 0 2px 1px black;
 }
 
 input:disabled{
@@ -80,6 +79,10 @@ table{
 }
 
 th, tr{
-    padding: 0.15rem;
-    border: 1px solid;
+    padding: 0.5rem;
+}
+
+
+#tr-message{
+    color: red;
 }
