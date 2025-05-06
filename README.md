@@ -1,5 +1,5 @@
 # Chronolog
-**Chronolog** is a web application designed to help you take control of your day by logging activities, marking key moments, and reflecting on how you spend your time. 
+**[Chronolog](https://hiteshnagal.github.io/chronolog/)** is a web application designed to help you take control of your day by logging activities, marking key moments, and reflecting on how you spend your time. 
 
 Features:
   - Task Logging: Enter tasks with start and end times.
