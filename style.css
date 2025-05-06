@@ -1,8 +1,6 @@
 :root{
-    --primary-bg-color: rgb(246, 255, 205);
-    --secondary-bg-color: rgb(203, 214, 174);
-    --btn-prim-bg-color: rgb(234, 240, 156);
-    --btn-sec-bg-color: rgb(229, 247, 73);
+    --primary-bg-color: white;
+    --secondary-bg-color: lightgray;
 }
 
 *{
@@ -59,16 +57,16 @@ button{
     padding: 0.5rem;
     height: 3rem;
     min-width: 5rem;
-    background-color: var(--btn-prim-bg-color);
+    background-color: gray;
     box-shadow: 0 0 2px 1px black inset;
 }
 
 button:hover:not(:disabled){
-    background-color: var(--btn-sec-bg-color);
+    background-color: black;
 }
 
 button:active:not(:disabled){
-    transform: scale(0.95);
+    filter: invert(1);
 }
 
 input:disabled{
@@ -78,7 +76,11 @@ input:disabled{
 
 table{
     border-collapse: collapse;
+    margin: 1rem auto;
+    background-color: burlywood;
 }
-th,td{
+
+th, tr{
+    padding: 0.15rem;
     border: 1px solid;
 }
