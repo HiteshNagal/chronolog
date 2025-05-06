@@ -1,0 +1,74 @@
+:root{
+    --primary-bg-color: rgb(246, 255, 205);
+    --secondary-bg-color: rgb(203, 214, 174);
+    --btn-prim-bg-color: rgb(234, 240, 156);
+    --btn-sec-bg-color: rgb(229, 247, 73);
+}
+
+*{
+    box-sizing: border-box;
+    padding: unset;
+    margin: unset;
+}
+
+
+/* GENERAL STYLES */
+html{
+    font-family: tahoma;
+    font-size: 10px;
+    line-height: 2;
+}
+
+body{
+    background-color: var(--primary-bg-color);
+    font-size: 1.5rem;
+}
+
+header, main, footer, fieldset{
+    padding: 1rem;
+}
+
+fieldset, legend, input, button, select{
+    font-size: inherit;
+    border: none;
+    border-radius: 0.25rem;
+}
+input, button, select{
+    padding: 0.25rem;
+}
+/* TRACKER CONTROLS STYLES */
+
+#tr-controls{
+    background-color: var(--secondary-bg-color);
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+fieldset:first-of-type{
+    border-bottom: 1px solid;
+}
+
+fieldset, fieldset > div:first-of-type{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+button{
+    padding: 0.5rem;
+    height: 3rem;
+    min-width: 5rem;
+    background-color: var(--btn-prim-bg-color);
+    box-shadow: 0 0 2px 1px black inset;
+}
+button:hover:not(:disabled){
+    background-color: var(--btn-sec-bg-color);
+}
+button:active:not(:disabled){
+    transform: scale(0.95);
+}
+input:disabled{
+    color: inherit;
+    background-color: white;
+}

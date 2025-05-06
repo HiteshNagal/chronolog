@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chronolog</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Last days</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <p id="tr-message"></p>
+        <section id="tr-controls">
+            <fieldset>
+                <div>
+                    <div>
+                        <label for="tr-name-inp">Name of task</label>
+                        <input type="text" name="tr-name" id="tr-name-inp" required>
+                    </div>
+                    <div>
+                        <label for="tr-category-inp">Category</label>
+                        <select name="tr-category" id="tr-category-inp" required>
+                            <option value="res">res</option>
+                            <option value="imp">imp</option>
+                            <option value="work">work</option>
+                            <option value="wst">wst</option>
+                            <option value="fam">fam</option>
+                            <option value="phys">phys</option>
+                            <option value="chil">chil</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="tr-time-inp">Time: </label>
+                    <input type="time" id="tr-time-inp" name="tr-time-inp">
+                    <button id="tr-time-inp-log-btn" disabled>Log</button>
+                    <button id="tr-time-inp-stop-btn" disabled>Stop</button>
+                </div>
+                <div>
+                    <label>Current Time: </label>
+                    <button id="tr-time-curr-log-btn">Log</button>
+                    <button id="tr-time-curr-stop-btn">Stop</button>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div>
+                    <label for="tr-timestamp-inp">Timestamp</label>
+                    <input type="time" name="tr-timestamp" id="tr-timestamp-inp">
+                </div>
+                <div>
+                    <label for="tr-timelabel-inp">Time label</label>
+                    <input type="text" name="tr-time-label" id="tr-timestamp-label-inp" required>
+                </div>
+                <button id="tr-timestamp-inp-log-btn" disabled>Log</button>
+                <div>
+                    <label for="tr-date-inp">Date: </label>
+                    <input type="date" id="tr-date-inp" name="tr-date">
+                    <button id="tr-submit" type="submit">Submit</button>
+                    <button id="tr-copy" disabled>Copy</button>
+                </div>
+            </fieldset>
+        </section>
+        <section id="tr-day">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time Label</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="tr-timestamp">
+                </tbody>
+            </table>
+            <table>
+                <caption>Current day</caption>
+                <thead>
+                    <tr>
+                        <th>Name of the task</th>
+                        <th>Time-in</th>
+                        <th>Time-out</th>
+                        <th>Category</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody id="tr-duration">
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>Made by HITESH NAGAL</p>
+    </footer>
+</body>
+<script src="script.js" defer></script>
+</html>
