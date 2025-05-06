@@ -63,12 +63,12 @@ entriesArr.forEach(e =>{
     loadEntryInTable(e,durationDispEl);
 });
 
-messageEl.innerHTML = timeInArr.length>0?`Current Entry: since ${timeInArr[0]}`:"Nothing in queue";
 
 timestampEntriesArr.forEach(e =>{
     loadEntryInTable(e,timestampDispEl);
 });
 
+updateMessage();
 
 timeInpLogBtn.addEventListener("click",()=>{
     if(!isTaskNameEmpty()){
@@ -106,7 +106,7 @@ timestampLogBtn.addEventListener("click",(e)=>{
     if(!isTimestampNameEmpty()){
         timestampArr.push(timestampInpEl.value);
         timestampLabelArr.push(timestampLabelInpEl.value);
-        timestampEntriesArr.push({timestamp: timestampArr.pop(), timestampLabel: timestampLabelArr.pop()});
+        timestampEntriesArr.push({timestampLabel: timestampLabelArr.pop(), timestamp: timestampArr.pop()});
         loadEntryInTable(timestampEntriesArr[timestampEntriesArr.length - 1],timestampDispEl);
         timestampInpEl.value = "";
         timestampLabelInpEl.value = "";
@@ -133,7 +133,7 @@ submitBtn.addEventListener("click",()=>{
         localStorage.setItem("trackedDays", JSON.stringify(trackedDaysArr));
         copyBtn.disabled = false;
     } else{
-        alert("Track the day first to submit")
+        alert("Incomplete entry or day not tracked")
     }
 });
 copyBtn.addEventListener("click",()=>{
@@ -176,6 +176,7 @@ function logTime(time){
     }
     timeInpLogBtn.disabled = true;
     timeInpStopBtn.disabled = true;
+    updateMessage();
 }
 
 function stopTime(time){
@@ -199,6 +200,7 @@ function stopTime(time){
             alert("Out time can't be zero or negative");
         }
     }
+    updateMessage();
 }
 
 function duration(timeIn, timeOut){
@@ -235,4 +237,8 @@ function getTimeHM(){
 
 function toWarTime(time){
     return Number(time.split(":").join(""));
+}
+
+function updateMessage(){
+    messageEl.innerHTML = timeInArr.length>0?`Current Entry: since ${timeInArr[0]}`:"Current Entry: none";
 }
