@@ -231,7 +231,7 @@ function getDateYMD(){
 
 function getTimeHM(){
     const dat = new Date();
-    const time = `${dat.getHours()}:${dat.getMinutes()}`;
+    const time = `${String(dat.getHours()).padStart(2,"0")}:${String(dat.getMinutes()).padStart(2,"0")}`;
     return time;
 }
 
