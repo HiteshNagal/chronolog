@@ -242,3 +242,119 @@ function toWarTime(time){
 function updateMessage(){
     messageEl.innerHTML = timeInArr.length>0?`Current Entry: since ${timeInArr[0]}`:"Current Entry: none";
 }
+
+
+//navigation menu
+
+const lastDaysLink = document.querySelector("#last-days");
+const settingsLink = document.querySelector("#settings");
+let isLastDaysActive = false;
+let isSettingsActive = false;
+
+//this part will have to shifted to settingsLink event listener when the feature of adding or removing new categories will be added
+
+//start here
+const categoryInpOptionArr = document.querySelectorAll("option");
+const categoryInpArr = [];
+for(let category of categoryInpOptionArr){
+    categoryInpArr.push(category.innerHTML);
+}
+//ends here
+
+const searchBase = [];
+for(let category of categoryInpArr){
+    searchBase.push({category: category, searchArr: JSON.parse(localStorage.getItem(`${category}-textarea`))});
+}
+
+
+lastDaysLink.addEventListener("click", ()=>{
+    if(!isLastDaysActive){
+        document.querySelector(".pop-up")?document.querySelector(".pop-up").remove():"";
+        const contEl = popUp("Last days",lastDaysLink.id);
+        for(const day of trackedDaysArr){
+            const summary = document.createElement("summary");
+            summary.textContent = day["date"];
+            const details = document.createElement("details");
+            details.classList.add("p-item");
+            const tableEl = document.createElement("table");
+            details.appendChild(tableEl);
+            tableEl.innerHTML = "<tr><th>Name of the task</th><th>Time-in</th><th>Time-out</th><th>Category</th><th>Duration</th></tr>";
+            day["entries"].forEach(e => loadEntryInTable(e,tableEl));
+            details.appendChild(summary);
+            contEl.appendChild(details);
+        }
+        isLastDaysActive = true;
+        isSettingsActive = false;
+    }
+});
+
+settingsLink.addEventListener("click",()=>{
+    if(!isSettingsActive){
+        document.querySelector(".pop-up")?document.querySelector(".pop-up").remove():"";
+        const contEl = popUp("Settings",settingsLink.id);
+        const detailsCont = document.createElement("details");
+        detailsCont.classList.add("p-item");
+        const summaryCont = document.createElement("summary");
+        summaryCont.textContent = "Categories";
+        detailsCont.appendChild(summaryCont);
+        contEl.appendChild(detailsCont);
+
+        for(let category of categoryInpArr){
+            const details = document.createElement("details");
+            const summary = document.createElement("summary");
+            summary.textContent = category;
+            details.appendChild(summary);
+            detailsCont.appendChild(details);
+            const textarea = document.createElement("textarea");
+            textarea.id = `${category}-textarea`;
+            textarea.value = localStorage.getItem(textarea.id)?JSON.parse(localStorage.getItem(textarea.id)).join(", "):"";
+            details.appendChild(textarea);
+        }
+        
+        document.querySelectorAll("textarea").forEach(e => {
+            e.addEventListener("input",()=>{
+                const valueArr = ((e.value).split(",")).map(e => e.trim());
+                localStorage.setItem(e.id,JSON.stringify(valueArr));
+            });
+        });
+
+        isSettingsActive = true;
+        isLastDaysActive = false;
+    }
+});
+
+taskNameInpEl.addEventListener("input",()=>{
+    const searchStr = taskNameInpEl.value;
+    for(let list of searchBase){
+        if(list["searchArr"]){
+            for(let value of list["searchArr"]){
+                if(String(value).toLowerCase().includes(String(searchStr).toLowerCase())){
+                    categoryInpEl.value = list["category"];
+                    return;
+                }
+            }
+        }
+    }
+});
+
+function popUp(headTxt,id){
+    const popUp = document.createElement("section");
+    popUp.classList.add("pop-up");
+    const closeBtn = document.createElement("span");
+    closeBtn.classList.add("close-btn");
+    closeBtn.innerHTML+= `&times;`;
+    closeBtn.addEventListener("click",()=>{
+        closeBtn.parentElement.remove();
+        id.includes("last-days")?isLastDaysActive = false : isSettingsActive = false;
+    });
+    popUp.appendChild(closeBtn);
+    const heading = document.createElement("h2");
+    heading.classList.add("pop-up-header");
+    heading.textContent = headTxt;
+    popUp.appendChild(heading);
+    const divCont = document.createElement("div");
+    divCont.classList.add("p-cont");
+    popUp.appendChild(divCont);
+    document.body.appendChild(popUp);
+    return divCont;
+};
