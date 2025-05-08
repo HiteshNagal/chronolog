@@ -73,13 +73,33 @@ input:disabled{
 }
 
 table{
+    caption-side: top;
     border-collapse: collapse;
     margin: 1rem auto;
     background-color: var(--secondary-bg-color);
+    border: 0.25em solid;
 }
 
-th, tr{
+caption{
+    padding: 0.5em;
+    background-color: black;
+    font-weight: bold;
+    color: white;
+}
+th, tr, td{
     padding: 0.5rem;
+}
+
+thead, th{
+    background-color: grey;
+    border: 0.15em solid;
+}
+
+tbody > tr:nth-of-type(even){
+    background-color: white;
+}
+tbody > tr:nth-of-type(odd){
+    background-color: lightgray;
 }
 
 #tr-message{
