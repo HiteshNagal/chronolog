@@ -103,5 +103,85 @@ tbody > tr:nth-of-type(odd){
 }
 
 #tr-message{
-    color: red;
+    text-align: center;
+    background-color: rgb(54, 107, 91);
+    color: yellow;
+}
+
+/* NAVIGATION MENU STYLES */
+
+header{
+    background-color: rgb(175, 236, 211);
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 0.25em;
+}
+
+ul{
+    list-style-type: none;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em;
+    justify-content: center;
+}
+
+.nav-link{
+    padding: 0.25em;
+    color: black;
+    text-decoration: none;
+}
+.nav-link:hover{
+    background-color: #0002;
+}
+.nav-link:active{
+    background-color: #0009;
+    color: #fff;
+}
+
+/* popup styles */
+
+.pop-up{
+    position: absolute;
+    top: 10rem;
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(132, 192, 174);
+}
+.close-btn{
+    position: absolute;
+    right: 10px;
+    font-weight: bolder;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: white;
+}
+.pop-up-header{
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+.p-cont{
+    padding: 1em;
+    display: flex;
+    height: 100%;
+    flex-flow: column nowrap;
+    gap: 0.5em;
+}
+.p-item{
+    padding: 0.5em;
+    border-radius: 0.25em;
+    background-color: white;
+    color: black;
+}
+details > details{
+    padding-left: 1em;
+}
+textarea{
+    padding: 0.25em;
+    width: fit-content;
+    height: fit-content;
 }
