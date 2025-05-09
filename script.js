@@ -274,8 +274,7 @@ homeLink.addEventListener("click",()=>{
     settingsLink.classList.remove("active");
     lastDaysLink.classList.remove("active");
     homeLink.classList.add("active");
-    isLastDayActive = false;
-    isSettingsActive = false;
+    isLastDaysActive = isSettingsActive = false;
     document.querySelector(".pop-up")?document.querySelector(".pop-up").remove():"";
 })
 
