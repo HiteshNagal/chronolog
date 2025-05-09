@@ -279,7 +279,6 @@ homeLink.addEventListener("click",()=>{
 })
 
 lastDaysLink.addEventListener("click", ()=>{
-    alert(isLastDaysActive);
     if(!isLastDaysActive){
         settingsLink.classList.remove("active");
         homeLink.classList.remove("active");
