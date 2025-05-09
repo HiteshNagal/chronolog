@@ -19,12 +19,12 @@ html{
 body{
     background-color: #f9f4f5;
     font-size: 1.5rem;
-    width: min-content;
     margin: 0 auto;
 }
 
 main{
     position: relative;
+    width: 100vw;
 }
 
 legend, input, button, select{
@@ -59,7 +59,6 @@ footer{
 }
 
 fieldset{
-    width: 100vw;
     max-width: fit-content;
     margin: 0px auto;
     border: none;
