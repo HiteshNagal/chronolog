@@ -17,14 +17,14 @@ html{
 }
 
 body{
-    background-color: var(--primary-bg-color);
+    background-color: #f9f4f5;
     font-size: 1.5rem;
+    width: min-content;
+    margin: 0 auto;
 }
-
-header, main, footer, fieldset{
-    padding: 1rem;
+main{
+    position: relative;
 }
-
 legend, input, button, select{
     font-size: inherit;
     border: none;
@@ -34,91 +34,105 @@ input, button, select{
     padding: 0.25rem;
     margin: 2px;
 }
+input, select{
+    min-width: 5em;
+    background-color: #f9f4f5;
+}
+footer{
+    padding: 0.25em;
+    color: #502f4c;
+    font-weight: bolder;
+    background-color: #c8b8d8;
+    text-align: center;
+}
 /* TRACKER CONTROLS STYLES */
 
 #tr-controls{
     display: flex;
     flex-flow: column nowrap;
+    background-color: #c8b8d8;
 }
 
 fieldset{
-    min-width: 350px;
+    min-width: 300px;
     max-width: fit-content;
     margin: 0px auto;
-}
-
-
-input, select{
-    border: 1px solid;
 }
 
 button{
     padding: 0.5rem;
     font-weight: bold;
-    background-color: gray;
 }
-
+button:not(:disabled){
+    background-color: #70587c;
+    cursor: pointer;
+}
 button:hover:not(:disabled){
     color: white;
-    background-color: black;
+    background-color: #502f4c;
 }
 
 button:active:not(:disabled){
-    box-shadow: 0 0 2px 1px black;
+    box-shadow: 0 0 2px 1px #c8b8d8;
 }
 
-input:disabled{
-    color: inherit;
-    background-color: white;
-}
+/* TABLE STYLES */
 
 table{
+    width: 80vw;
     caption-side: top;
     border-collapse: collapse;
     margin: 1rem auto;
-    background-color: var(--secondary-bg-color);
+    background-color: #c8b8d8;
     border: 0.25em solid;
 }
 
 caption{
     padding: 0.5em;
-    background-color: black;
+    background-color: #502f4c;
     font-weight: bold;
-    color: white;
+    color: #f9f4f5;
 }
 th, tr, td{
     padding: 0.5rem;
+    text-align: center;
 }
 
 thead, th{
-    background-color: grey;
+    background-color: #70587c;
     border: 0.15em solid;
 }
 
 tbody > tr:nth-of-type(even){
-    background-color: white;
+    background-color: #f9f4f5;
 }
 tbody > tr:nth-of-type(odd){
-    background-color: lightgray;
+    background-color: #c8b8d8;
 }
 
 #tr-message{
     text-align: center;
-    background-color: rgb(54, 107, 91);
-    color: yellow;
+    background-color: #70587c;
+    color: #c8b8d8;
 }
 
 /* NAVIGATION MENU STYLES */
 
 header{
-    background-color: rgb(175, 236, 211);
+    background-color: #000000;
 }
 
 h1{
+    color: #f9f4f5;
     text-align: center;
     margin-bottom: 0.25em;
 }
-
+nav{
+    padding: 0.25em;
+    background-color: #502f4c;
+    position: sticky;
+    top: 0;
+}
 ul{
     list-style-type: none;
     display: flex;
@@ -129,28 +143,32 @@ ul{
 
 .nav-link{
     padding: 0.25em;
-    color: black;
+    color: #f9f4f5;
     text-decoration: none;
 }
 .nav-link:hover{
-    background-color: #0002;
+    border-bottom: 5px solid;
 }
 .nav-link:active{
-    background-color: #0009;
+    background: radial-gradient(ellipse at bottom,#b994b5, #502f4c);
     color: #fff;
+}
+.nav-link.active{
+    background: radial-gradient(ellipse at top,#b994b5, #502f4c);
+    border-bottom: 5px solid;
 }
 
 /* popup styles */
 
 .pop-up{
     position: absolute;
-    top: 10rem;
-    height: 100%;
-    bottom: 0;
+    background-color: #c8b8d8;
+    top: 0;
     left: 0;
     right: 0;
-    background-color: rgb(132, 192, 174);
+    min-height: 100%;
 }
+
 .close-btn{
     position: absolute;
     right: 10px;
@@ -159,11 +177,13 @@ ul{
     cursor: pointer;
     color: white;
 }
+
 .pop-up-header{
-    background-color: black;
-    color: white;
+    background-color: #70587c;
+    color: #c8b8d8;
     text-align: center;
 }
+
 .p-cont{
     padding: 1em;
     display: flex;
@@ -171,17 +191,34 @@ ul{
     flex-flow: column nowrap;
     gap: 0.5em;
 }
+
 .p-item{
     padding: 0.5em;
     border-radius: 0.25em;
     background-color: white;
     color: black;
+    overflow: auto;
 }
+
+.p-item > * > *{
+    font-size: 75%;
+}
+
 details > details{
     padding-left: 1em;
 }
+
 textarea{
     padding: 0.25em;
     width: fit-content;
     height: fit-content;
+}
+
+fieldset{
+    border: none;
+}
+
+legend{
+    font-weight: bolder;
+    color: #502f4c;
 }
