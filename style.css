@@ -212,10 +212,6 @@ ul{
     overflow: auto;
 }
 
-.p-item > * > *{
-    font-size: 75%;
-}
-
 details > details{
     padding-left: 1em;
 }
