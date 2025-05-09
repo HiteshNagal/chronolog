@@ -243,13 +243,15 @@ function updateMessage(){
     messageEl.innerHTML = timeInArr.length>0?`Current Entry: since ${timeInArr[0]}`:"Current Entry: none";
 }
 
-
 //navigation menu
 
 const lastDaysLink = document.querySelector("#last-days");
 const settingsLink = document.querySelector("#settings");
+const homeLink = document.querySelector("#home");
 let isLastDaysActive = false;
 let isSettingsActive = false;
+
+const mainEl = document.querySelector("main");
 
 //this part will have to shifted to settingsLink event listener when the feature of adding or removing new categories will be added
 
@@ -266,9 +268,20 @@ for(let category of categoryInpArr){
     searchBase.push({category: category, searchArr: JSON.parse(localStorage.getItem(`${category}-textarea`))});
 }
 
+homeLink.classList.add("active");
+
+homeLink.addEventListener("click",()=>{
+    settingsLink.classList.remove("active");
+    lastDaysLink.classList.remove("active");
+    homeLink.classList.add("active");
+    document.querySelector(".pop-up")?document.querySelector(".pop-up").remove():"";
+})
 
 lastDaysLink.addEventListener("click", ()=>{
     if(!isLastDaysActive){
+        settingsLink.classList.remove("active");
+        homeLink.classList.remove("active");
+        lastDaysLink.classList.add("active");
         document.querySelector(".pop-up")?document.querySelector(".pop-up").remove():"";
         const contEl = popUp("Last days",lastDaysLink.id);
         for(const day of trackedDaysArr){
@@ -277,9 +290,11 @@ lastDaysLink.addEventListener("click", ()=>{
             const details = document.createElement("details");
             details.classList.add("p-item");
             const tableEl = document.createElement("table");
+            const tableBodyEl = document.createElement("tbody");
+            tableEl.innerHTML = "<thead><tr><th>Name of the task</th><th>Time-in</th><th>Time-out</th><th>Category</th><th>Duration</th></tr></thead>";
+            day["entries"].forEach(e => loadEntryInTable(e,tableBodyEl));
+            tableEl.appendChild(tableBodyEl);
             details.appendChild(tableEl);
-            tableEl.innerHTML = "<tr><th>Name of the task</th><th>Time-in</th><th>Time-out</th><th>Category</th><th>Duration</th></tr>";
-            day["entries"].forEach(e => loadEntryInTable(e,tableEl));
             details.appendChild(summary);
             contEl.appendChild(details);
         }
@@ -290,6 +305,9 @@ lastDaysLink.addEventListener("click", ()=>{
 
 settingsLink.addEventListener("click",()=>{
     if(!isSettingsActive){
+        settingsLink.classList.add("active");
+        lastDaysLink.classList.remove("active");
+        homeLink.classList.remove("active");
         document.querySelector(".pop-up")?document.querySelector(".pop-up").remove():"";
         const contEl = popUp("Settings",settingsLink.id);
         const detailsCont = document.createElement("details");
@@ -298,7 +316,6 @@ settingsLink.addEventListener("click",()=>{
         summaryCont.textContent = "Categories";
         detailsCont.appendChild(summaryCont);
         contEl.appendChild(detailsCont);
-
         for(let category of categoryInpArr){
             const details = document.createElement("details");
             const summary = document.createElement("summary");
@@ -346,6 +363,8 @@ function popUp(headTxt,id){
     closeBtn.addEventListener("click",()=>{
         closeBtn.parentElement.remove();
         id.includes("last-days")?isLastDaysActive = false : isSettingsActive = false;
+        settingsLink.classList.remove("active");
+        lastDaysLink.classList.remove("active");
     });
     popUp.appendChild(closeBtn);
     const heading = document.createElement("h2");
@@ -355,6 +374,6 @@ function popUp(headTxt,id){
     const divCont = document.createElement("div");
     divCont.classList.add("p-cont");
     popUp.appendChild(divCont);
-    document.body.appendChild(popUp);
+    mainEl.appendChild(popUp);
     return divCont;
 };
