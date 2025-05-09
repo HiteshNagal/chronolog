@@ -22,22 +22,27 @@ body{
     width: min-content;
     margin: 0 auto;
 }
+
 main{
     position: relative;
 }
+
 legend, input, button, select{
     font-size: inherit;
     border: none;
     border-radius: 0.25rem;
 }
+
 input, button, select{
     padding: 0.25rem;
     margin: 2px;
 }
+
 input, select{
     min-width: 5em;
     background-color: #f9f4f5;
 }
+
 footer{
     padding: 0.25em;
     color: #502f4c;
@@ -54,19 +59,27 @@ footer{
 }
 
 fieldset{
-    min-width: 300px;
+    width: 100vw;
     max-width: fit-content;
     margin: 0px auto;
+    border: none;
+}
+
+legend{
+    font-weight: bolder;
+    color: #502f4c;
 }
 
 button{
     padding: 0.5rem;
     font-weight: bold;
 }
+
 button:not(:disabled){
     background-color: #70587c;
     cursor: pointer;
 }
+
 button:hover:not(:disabled){
     color: white;
     background-color: #502f4c;
@@ -212,13 +225,4 @@ textarea{
     padding: 0.25em;
     width: fit-content;
     height: fit-content;
-}
-
-fieldset{
-    border: none;
-}
-
-legend{
-    font-weight: bolder;
-    color: #502f4c;
 }
