@@ -8,9 +8,12 @@
 </head>
 <body>
     <header>
+        <h1>Chronolog</h1>
         <nav>
             <ul>
-                <li><a href="#">Last days</a></li>
+                <li><a href="#" class="nav-link" id="home">Home</a></li>
+                <li><a href="#" class="nav-link" id="last-days">Last days</a></li>
+                <li><a href="#" class="nav-link" id="settings">Settings</a></li>
             </ul>
         </nav>
     </header>
@@ -18,23 +21,22 @@
         <p id="tr-message"></p>
         <section id="tr-controls">
             <fieldset>
+                <legend>Task Logging</legend>
                 <div>
-                    <div>
-                        <label for="tr-name-inp">Name of task</label>
-                        <input type="text" name="tr-name" id="tr-name-inp" required>
-                    </div>
-                    <div>
-                        <label for="tr-category-inp">Category</label>
-                        <select name="tr-category" id="tr-category-inp" required>
-                            <option value="res">res</option>
-                            <option value="imp">imp</option>
-                            <option value="work">work</option>
-                            <option value="wst">wst</option>
-                            <option value="fam">fam</option>
-                            <option value="phys">phys</option>
-                            <option value="chil">chil</option>
-                        </select>
-                    </div>
+                    <label for="tr-name-inp">Name of task</label>
+                    <input type="text" name="tr-name" id="tr-name-inp" required>
+                </div>
+                <div>
+                    <label for="tr-category-inp">Category</label>
+                    <select name="tr-category" id="tr-category-inp" required>
+                        <option value="res">res</option>
+                        <option value="imp">imp</option>
+                        <option value="work">work</option>
+                        <option value="wst">wst</option>
+                        <option value="fam">fam</option>
+                        <option value="phys">phys</option>
+                        <option value="chil">chil</option>
+                    </select>
                 </div>
                 <div>
                     <label for="tr-time-inp">Time: </label>
@@ -49,28 +51,29 @@
                 </div>
             </fieldset>
             <fieldset>
+                <legend>Moment Tracking</legend>
+                <div>
+                    <label for="tr-timelabel-inp">Moment</label>
+                    <input type="text" name="tr-time-label" id="tr-timestamp-label-inp" required>
+                </div>
                 <div>
                     <label for="tr-timestamp-inp">Timestamp</label>
                     <input type="time" name="tr-timestamp" id="tr-timestamp-inp">
+                    <button id="tr-timestamp-inp-log-btn" disabled>Log</button>
                 </div>
-                <div>
-                    <label for="tr-timelabel-inp">Time label</label>
-                    <input type="text" name="tr-time-label" id="tr-timestamp-label-inp" required>
-                </div>
-                <button id="tr-timestamp-inp-log-btn" disabled>Log</button>
-                <div>
-                    <label for="tr-date-inp">Date: </label>
-                    <input type="date" id="tr-date-inp" name="tr-date">
-                    <button id="tr-submit" type="submit">Submit</button>
-                    <button id="tr-copy" disabled>Copy</button>
-                </div>
+            </fieldset>
+            <fieldset>
+                <label for="tr-date-inp">Date: </label>
+                <input type="date" id="tr-date-inp" name="tr-date">
+                <button id="tr-submit" type="submit">Submit</button>
+                <button id="tr-copy" disabled>Copy</button>
             </fieldset>
         </section>
         <section id="tr-day">
             <table>
                 <thead>
                     <tr>
-                        <th>Time Label</th>
+                        <th>Moment</th>
                         <th>Timestamp</th>
                     </tr>
                 </thead>
@@ -94,7 +97,7 @@
         </section>
     </main>
     <footer>
-        <p>Made by HITESH NAGAL</p>
+        <p> &Ll;&Ll; Made by HITESH NAGAL &Gg;&Gg;</p>
     </footer>
 </body>
 <script src="script.js" defer></script>

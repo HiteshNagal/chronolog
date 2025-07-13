@@ -9,78 +9,215 @@
     margin: unset;
 }
 
-
 /* GENERAL STYLES */
 html{
     font-family: tahoma;
     font-size: 10px;
-    line-height: 2;
+    line-height: 1.5;
 }
 
 body{
-    background-color: var(--primary-bg-color);
+    background-color: #f9f4f5;
     font-size: 1.5rem;
+    margin: 0 auto;
 }
 
-header, main, footer, fieldset{
-    padding: 1rem;
+main{
+    position: relative;
+    width: 100vw;
 }
 
-fieldset, legend, input, button, select{
+legend, input, button, select{
     font-size: inherit;
     border: none;
     border-radius: 0.25rem;
 }
+
 input, button, select{
     padding: 0.25rem;
+    margin: 2px;
+}
+
+input, select{
+    min-width: 5em;
+    background-color: #f9f4f5;
+}
+
+footer{
+    padding: 0.25em;
+    color: #502f4c;
+    font-weight: bolder;
+    background-color: #c8b8d8;
+    text-align: center;
 }
 /* TRACKER CONTROLS STYLES */
 
 #tr-controls{
-    background-color: var(--secondary-bg-color);
     display: flex;
     flex-flow: column nowrap;
+    background-color: #c8b8d8;
 }
 
-fieldset:first-of-type{
-    border-bottom: 1px solid;
+fieldset{
+    max-width: fit-content;
+    margin: 0px auto;
+    border: none;
 }
 
-fieldset, fieldset > div:first-of-type{
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    gap: 0.5rem;
+legend{
+    font-weight: bolder;
+    color: #502f4c;
 }
 
 button{
     padding: 0.5rem;
-    height: 3rem;
-    min-width: 5rem;
-    background-color: gray;
-    box-shadow: 0 0 2px 1px black inset;
+    font-weight: bold;
+}
+
+button:not(:disabled){
+    background-color: #70587c;
+    cursor: pointer;
 }
 
 button:hover:not(:disabled){
-    background-color: black;
+    color: white;
+    background-color: #502f4c;
 }
 
 button:active:not(:disabled){
-    filter: invert(1);
+    box-shadow: 0 0 2px 1px #c8b8d8;
 }
 
-input:disabled{
-    color: inherit;
-    background-color: white;
-}
+/* TABLE STYLES */
 
 table{
+    width: 80vw;
+    caption-side: top;
     border-collapse: collapse;
     margin: 1rem auto;
-    background-color: burlywood;
+    background-color: #c8b8d8;
+    border: 0.25em solid;
 }
 
-th, tr{
-    padding: 0.15rem;
-    border: 1px solid;
+caption{
+    padding: 0.5em;
+    background-color: #502f4c;
+    font-weight: bold;
+    color: #f9f4f5;
+}
+th, tr, td{
+    padding: 0.5rem;
+    text-align: center;
+}
+
+thead, th{
+    background-color: #70587c;
+    border: 0.15em solid;
+}
+
+tbody > tr:nth-of-type(even){
+    background-color: #f9f4f5;
+}
+tbody > tr:nth-of-type(odd){
+    background-color: #c8b8d8;
+}
+
+#tr-message{
+    text-align: center;
+    background-color: #70587c;
+    color: #c8b8d8;
+}
+
+/* NAVIGATION MENU STYLES */
+
+header{
+    background-color: #000000;
+}
+
+h1{
+    color: #f9f4f5;
+    text-align: center;
+    margin-bottom: 0.25em;
+}
+nav{
+    padding: 0.25em;
+    background-color: #502f4c;
+    position: sticky;
+    top: 0;
+}
+ul{
+    list-style-type: none;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em;
+    justify-content: center;
+}
+
+.nav-link{
+    padding: 0.25em;
+    color: #f9f4f5;
+    text-decoration: none;
+}
+.nav-link:hover{
+    border-bottom: 5px solid;
+}
+.nav-link:active{
+    background: radial-gradient(ellipse at bottom,#b994b5, #502f4c);
+    color: #fff;
+}
+.nav-link.active{
+    background: radial-gradient(ellipse at top,#b994b5, #502f4c);
+    border-bottom: 5px solid;
+}
+
+/* popup styles */
+
+.pop-up{
+    position: absolute;
+    background-color: #c8b8d8;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 100%;
+}
+
+.close-btn{
+    position: absolute;
+    right: 10px;
+    font-weight: bolder;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: white;
+}
+
+.pop-up-header{
+    background-color: #70587c;
+    color: #c8b8d8;
+    text-align: center;
+}
+
+.p-cont{
+    padding: 1em;
+    display: flex;
+    height: 100%;
+    flex-flow: column nowrap;
+    gap: 0.5em;
+}
+
+.p-item{
+    padding: 0.5em;
+    border-radius: 0.25em;
+    background-color: white;
+    color: black;
+    overflow: auto;
+}
+
+details > details{
+    padding-left: 1em;
+}
+
+textarea{
+    padding: 0.25em;
+    width: fit-content;
+    height: fit-content;
 }
