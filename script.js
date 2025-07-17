@@ -15,7 +15,9 @@ const timestampLogBtn = document.querySelector("#tr-timestamp-inp-log-btn");
     //references for date input and submit button
 const dateInpEl = document.querySelector("#tr-date-inp");
 const submitBtn = document.querySelector("#tr-submit");
-const copyBtn = document.querySelector("#tr-copy");
+const clearEntryBtn = document.querySelector("#tr-clear-current-entry");
+const clearLastEntryBtn = document.querySelector("#tr-clear-last-entry");
+const clearDayBtn = document.querySelector("#tr-clear-day");
 
 const messageEl = document.querySelector("#tr-message");
 
@@ -119,7 +121,15 @@ timestampLogBtn.addEventListener("click",(e)=>{
 
 submitBtn.addEventListener("click",()=>{
     if(entriesArr.length && !(timeInArr.length - timeOutArr.length)){
-        trackedDaysArr.push({date: dateInpEl.value, entries: entriesArr, timestamps: timestampEntriesArr});
+        const summObj = {};
+        const catArr = getCategoriesArr();
+        catArr.forEach(e => {
+            summObj[e] = 0;
+        });
+        for(let i=0; i<entriesArr.length; i++){
+            summObj[entriesArr[i]["category"]] += entriesArr[i]["duration"];
+        };
+        trackedDaysArr.push({date: dateInpEl.value, entries: entriesArr, timestamps: timestampEntriesArr, summary: summObj});
         entriesArr = [];
         timeInArr = [];
         timeOutArr = [];
@@ -131,11 +141,49 @@ submitBtn.addEventListener("click",()=>{
         durationDispEl.innerHTML = "";
         timestampDispEl.innerHTML = "";
         localStorage.setItem("trackedDays", JSON.stringify(trackedDaysArr));
-        copyBtn.disabled = false;
     } else{
-        alert("Incomplete entry or day not tracked")
+        if(timeInArr.length - timeOutArr.length){
+            alert("Incomplete entry")
+        } else if(!entriesArr.length){
+            alert("Day not tracked");
+        } else if(JSON.parse(localStorage.getItem("trackedDays")).lastItem["date"] == dateInpEl.value){
+            alert("Day already submitted");
+        }
     }
 });
+
+clearEntryBtn.addEventListener("click",()=>{
+    timeInArr.pop();
+    localStorage.setItem("timeIn", JSON.stringify(timeInArr));
+    updateMessage();
+    updateTable();
+});
+clearLastEntryBtn.addEventListener("click",()=>{
+    if(timeInArr.length){
+        alert("Clear current entry first");
+    } else {
+        entriesArr.pop();
+    durationDispEl.innerHTML = "";
+        localStorage.setItem("ent", JSON.stringify(entriesArr));
+    }
+    updateTable();
+});
+clearDayBtn.addEventListener("click",()=>{
+    entriesArr = [];
+    localStorage.removeItem("ent");
+    updateMessage();
+    updateTable();
+});
+
+function updateTable(){
+    durationDispEl.innerHTML = "";
+    console.log(entriesArr)
+    for(let i=0; i<entriesArr.length; i++){
+        loadEntryInTable(entriesArr[i],durationDispEl);
+    }
+}
+/*
+This copy button is removed temporarily from the web-app by making it a comment
 copyBtn.addEventListener("click",()=>{
     const strArr = trackedDaysArr[trackedDaysArr.length - 1]["entries"];
     let str = "Name of the task,Time-in,Time-out,Category,Duration\n";
@@ -149,13 +197,16 @@ copyBtn.addEventListener("click",()=>{
     console.log(str, strArr);
     navigator.clipboard.writeText(str);
 });
+*/
 
 function logTime(time){
     if(isCurEntComplete() && !entriesArr.length){
         timeInArr.push(time);
+        localStorage.setItem("timeIn", JSON.stringify(timeInArr));
     } else if(isCurEntComplete() && entriesArr.length){
         if(toWarTime(entriesArr[entriesArr.length - 1]["timeOut"])<=toWarTime(time)){
             timeInArr.push(time);
+            localStorage.setItem("timeIn", JSON.stringify(timeInArr));
         } else {
             alert("Error: Overlapping time");
         }
@@ -165,7 +216,7 @@ function logTime(time){
             taskNameArr.push(taskNameInpEl.value);
             categoryArr.push(categoryInpEl.value);
             const dur = duration(timeInArr[0],timeOutArr[0]);
-            entriesArr.push({taskName: taskNameArr.pop(), timeIn: timeInArr.pop(), timeOut: timeOutArr.pop(), cateogory: categoryArr.pop(), duration: dur});
+            entriesArr.push({taskName: taskNameArr.pop(), timeIn: timeInArr.pop(), timeOut: timeOutArr.pop(), category: categoryArr.pop(), duration: dur});
             loadEntryInTable(entriesArr[entriesArr.length - 1],durationDispEl);
             timeInArr.push(time);
             localStorage.setItem("ent", JSON.stringify(entriesArr));
@@ -192,7 +243,7 @@ function stopTime(time){
             timeInpLogBtn.disabled = true;
             timeInpStopBtn.disabled = true;
             const dur = duration(timeInArr[0],timeOutArr[0]);
-            entriesArr.push({taskName: taskNameArr.pop(), timeIn: timeInArr.pop(), timeOut: timeOutArr.pop(), cateogory: categoryArr.pop(), duration: dur});
+            entriesArr.push({taskName: taskNameArr.pop(), timeIn: timeInArr.pop(), timeOut: timeOutArr.pop(), category: categoryArr.pop(), duration: dur});
             loadEntryInTable(entriesArr[entriesArr.length - 1],durationDispEl);
             localStorage.setItem("ent", JSON.stringify(entriesArr));
             localStorage.setItem("timeIn", JSON.stringify(timeInArr));
@@ -240,7 +291,19 @@ function toWarTime(time){
 }
 
 function updateMessage(){
-    messageEl.innerHTML = timeInArr.length>0?`Current Entry: since ${timeInArr[0]}`:"Current Entry: none";
+    if(timeInArr.length>0){
+        messageEl.innerHTML = `Current Entry: since ${timeInArr[0]}`;
+        messageEl.classList.remove("green-border");
+        messageEl.classList.add("red-border");
+
+    }else {
+        messageEl.innerHTML = "Current Entry: none";
+        messageEl.classList.remove("red-border");
+        messageEl.classList.add("green-border");
+    }
+    clearEntryBtn.disabled = timeInArr.length>0?false:true;
+    clearLastEntryBtn.disabled = entriesArr.length>0 && timeInArr.length==0?false:true;
+    clearDayBtn.disabled = entriesArr.length>0?false:true;
 }
 
 //navigation menu
@@ -254,17 +317,20 @@ let isSettingsActive = false;
 const mainEl = document.querySelector("main");
 
 //this part will have to shifted to settingsLink event listener when the feature of adding or removing new categories will be added
+//The section involving categories will have to be updated for the feature "add or remove category"
 
 //start here
-const categoryInpOptionArr = document.querySelectorAll("option");
-const categoryInpArr = [];
-for(let category of categoryInpOptionArr){
-    categoryInpArr.push(category.innerHTML);
+function getCategoriesArr(){
+    const categoryInpOptionArr = document.querySelectorAll("option");
+    const categoryInpArr = [];
+    for(let category of categoryInpOptionArr){
+        categoryInpArr.push(category.innerHTML);
+    }
+    return categoryInpArr;
 }
 //ends here
-
 const searchBase = [];
-for(let category of categoryInpArr){
+for(let category of getCategoriesArr()){
     searchBase.push({category: category, searchArr: JSON.parse(localStorage.getItem(`${category}-textarea`))});
 }
 
@@ -285,19 +351,76 @@ lastDaysLink.addEventListener("click", ()=>{
         lastDaysLink.classList.add("active");
         document.querySelector(".pop-up")?document.querySelector(".pop-up").remove():"";
         const contEl = popUp("Last days",lastDaysLink.id);
+        contEl.classList.add("summary");
+
+        const div = document.createElement("div");
+        div.classList.add("column");
+
+        const p = document.createElement("p");
+        p.innerHTML = "Click on date to view data in detail"
+        contEl.parentElement.appendChild(p);
+
+        const dispEl = document.createElement("div");
+        contEl.parentElement.appendChild(dispEl);
+
+        const colArr = ["Date", ...getCategoriesArr(), "Total"]
+        for(let i=0; i<colArr.length; i++){
+            const span = document.createElement("span");
+            span.classList.add("cell");
+            span.innerHTML = colArr[i];
+            div.appendChild(span);
+        }
+        contEl.appendChild(div);
+
         for(const day of trackedDaysArr){
-            const summary = document.createElement("summary");
-            summary.textContent = day["date"];
-            const details = document.createElement("details");
-            details.classList.add("p-item");
-            const tableEl = document.createElement("table");
-            const tableBodyEl = document.createElement("tbody");
-            tableEl.innerHTML = "<thead><tr><th>Name of the task</th><th>Time-in</th><th>Time-out</th><th>Category</th><th>Duration</th></tr></thead>";
-            day["entries"].forEach(e => loadEntryInTable(e,tableBodyEl));
-            tableEl.appendChild(tableBodyEl);
-            details.appendChild(tableEl);
-            details.appendChild(summary);
-            contEl.appendChild(details);
+            const summaryObj = day["summary"];
+            const date = day["date"];
+            const values = Object.keys(summaryObj).map(e => summaryObj[e]);
+            const total = Object.keys(summaryObj).map(e => summaryObj[e]).reduce((a,b)=> a+b);
+            const loadArr = [date, ...values, total];
+
+            const div = document.createElement("div");
+            div.classList.add("column");
+
+            for(let i=0; i<loadArr.length; i++){
+                const span = document.createElement("span");
+                span.classList.add("cell");
+                span.innerHTML = loadArr[i];
+                div.appendChild(span);
+                if(i==0){
+                    span.classList.add("header-btn");
+                    span.addEventListener("click",()=>{
+                        dispEl.innerHTML = "";
+
+                        const div = document.createElement("div");
+                        div.innerHTML = `<h3>${date}</h3>`
+
+                        const p1 = document.createElement("p");
+                        p1.innerHTML = "Time Tracking";
+                        const tableEl1 = document.createElement("table");
+                        const tableBodyEl1 = document.createElement("tbody");
+                        tableEl1.innerHTML = "<thead><tr><th>Name of the task</th><th>Time-in</th><th>Time-out</th><th>Category</th><th>Duration</th></tr></thead>";
+                        day["entries"].forEach(e => loadEntryInTable(e,tableBodyEl1));
+                        tableEl1.appendChild(tableBodyEl1);
+                        div.appendChild(p1);
+                        div.appendChild(tableEl1)
+                        dispEl.appendChild(div);
+
+                        
+                        const p2 = document.createElement("p");
+                        p2.innerHTML = "Moment Tracking";
+                        const tableEl2 = document.createElement("table");
+                        const tableBodyEl2 = document.createElement("tbody");
+                        tableEl2.innerHTML = "<thead><tr><th>Moment</th><th>Timestamp</th></tr></thead>";
+                        day["timestamps"].forEach(e => loadEntryInTable(e,tableBodyEl2));
+                        tableEl2.appendChild(tableBodyEl2);
+                        div.appendChild(p2);
+                        div.appendChild(tableEl2)
+                        dispEl.appendChild(div);
+                    })
+                }
+            }
+            contEl.appendChild(div);
         }
         isLastDaysActive = true;
         isSettingsActive = false;
@@ -317,7 +440,7 @@ settingsLink.addEventListener("click",()=>{
         summaryCont.textContent = "Categories";
         detailsCont.appendChild(summaryCont);
         contEl.appendChild(detailsCont);
-        for(let category of categoryInpArr){
+        for(let category of getCategoriesArr()){
             const details = document.createElement("details");
             const summary = document.createElement("summary");
             summary.textContent = category;
@@ -366,6 +489,7 @@ function popUp(headTxt,id){
         id.includes("last-days")?isLastDaysActive = false : isSettingsActive = false;
         settingsLink.classList.remove("active");
         lastDaysLink.classList.remove("active");
+        homeLink.classList.add("active");
     });
     popUp.appendChild(closeBtn);
     const heading = document.createElement("h2");
