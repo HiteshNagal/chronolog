@@ -55,13 +55,14 @@ footer{
 #tr-controls{
     display: flex;
     flex-flow: column nowrap;
+    justify-content: center;
     background-color: #c8b8d8;
 }
 
 fieldset{
-    max-width: fit-content;
-    margin: 0px auto;
-    border: none;
+    border: #502f4c solid 0.25em;
+    padding: 0.25em;
+    margin-bottom: 0.15em;
 }
 
 legend{
@@ -86,8 +87,8 @@ button:hover:not(:disabled){
 
 button:active:not(:disabled){
     box-shadow: 0 0 2px 1px #c8b8d8;
+    transform: scale(0.95);
 }
-
 /* TABLE STYLES */
 
 table{
@@ -126,6 +127,13 @@ tbody > tr:nth-of-type(odd){
     text-align: center;
     background-color: #70587c;
     color: #c8b8d8;
+    border: 1px solid;
+}
+#tr-message.red-border{
+    border-color: red;
+}
+#tr-message.green-border{
+    border-color: lime;
 }
 
 /* NAVIGATION MENU STYLES */
@@ -220,4 +228,44 @@ textarea{
     padding: 0.25em;
     width: fit-content;
     height: fit-content;
+}
+
+/* TEST for flex */
+.summary{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0px;
+    overflow: auto;
+    padding: unset;
+    border: 2px solid;
+}
+.column{
+    width: max-content;
+    display: flex;
+    flex-flow: column nowrap;
+}
+.column:first-child, .column > :first-child{
+    font-weight: bold;
+}
+.column:first-child{
+    border-right: 1px solid;
+}
+.column > :first-child{
+    border-bottom: 1px solid;
+}
+.column > :last-child{
+    border-top: 1px solid;
+}
+.cell{
+    min-width: 100px;
+    background-color: #502f4c;
+    color: #f9f4f5;
+    padding: 0.15em;
+}
+.header-btn:hover{
+    background-color: #f9f4f5;
+    color: #502f4c;
+}
+.header-btn:active{
+    transform: scale(0.95);
 }
