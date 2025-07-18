@@ -376,7 +376,9 @@ lastDaysLink.addEventListener("click", ()=>{
             const summaryObj = day["summary"];
             const date = day["date"];
             const values = Object.keys(summaryObj).map(e => summaryObj[e]);
-            const total = Object.keys(summaryObj).map(e => summaryObj[e]).reduce((a,b)=> a+b);
+            //Remove line below this comment if code related to it works
+            //const total = Object.keys(summaryObj).map(e => summaryObj[e]).reduce((a,b)=> a+b);
+            const total = (Math.round(Object.keys(summaryObj).map(e => summaryObj[e]).reduce((a,b)=> a+b)*100))/100;
             const loadArr = [date, ...values, total];
 
             const div = document.createElement("div");
